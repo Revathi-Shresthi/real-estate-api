@@ -5,6 +5,8 @@ import cors from 'cors';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import logger from './config/logger.js';
+import { securityMiddleware } from './middleware/security.middleware.js';
+import authRoutes from './routes/auth.routes.js';
 
 const app = express();
 
@@ -35,7 +37,10 @@ app.use(
   })
 );
 
-// Health check endpoint
+// Security middleware
+app.use(securityMiddleware);
+
+// Health check
 app.get('/health', (req, res) => {
   res.status(200).json({
     status: 'ok',
@@ -45,13 +50,16 @@ app.get('/health', (req, res) => {
   });
 });
 
-// API info endpoint
+// API info
 app.get('/api', (req, res) => {
   res.status(200).json({
     message: 'Real Estate API is running',
     version: '1.0.0',
   });
 });
+
+// Routes
+app.use('/api/auth', authRoutes);
 
 // 404 handler
 app.use((req, res) => {
