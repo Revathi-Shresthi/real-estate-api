@@ -1,0 +1,13 @@
+node_modules/
+.env
+.env.*
+!.env.example
+dist/
+coverage/
+logs/
+*.log
+ml-service/venv/
+ml-service/__pycache__/
+ml-service/model/*.pkl
+drizzle/
+.DS_Store
