@@ -1,0 +1,32 @@
+import {
+  pgTable,
+  serial,
+  varchar,
+  text,
+  integer,
+  numeric,
+  timestamp,
+  json,
+} from 'drizzle-orm/pg-core';
+
+export const listings = pgTable('listings', {
+  id: serial('id').primaryKey(),
+  title: varchar('title', { length: 255 }).notNull(),
+  description: text('description').notNull(),
+  price: numeric('price', { precision: 12, scale: 2 }).notNull(),
+  location: varchar('location', { length: 255 }).notNull(),
+  city: varchar('city', { length: 100 }).notNull(),
+  state: varchar('state', { length: 100 }).notNull(),
+  pincode: varchar('pincode', { length: 10 }),
+  type: varchar('type', { length: 50 }).notNull(),
+  category: varchar('category', { length: 50 }).notNull(),
+  bedrooms: integer('bedrooms'),
+  bathrooms: integer('bathrooms'),
+  area: numeric('area', { precision: 10, scale: 2 }),
+  images: json('images').default([]),
+  amenities: json('amenities').default([]),
+  status: varchar('status', { length: 50 }).notNull().default('available'),
+  agentId: integer('agent_id').notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
