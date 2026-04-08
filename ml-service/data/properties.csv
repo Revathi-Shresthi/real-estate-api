@@ -1,0 +1,58 @@
+city,state,type,category,bedrooms,bathrooms,area,price
+Bangalore,Karnataka,sale,apartment,1,1,600,3500000
+Bangalore,Karnataka,sale,apartment,2,1,900,5500000
+Bangalore,Karnataka,sale,apartment,2,2,1100,7000000
+Bangalore,Karnataka,sale,apartment,3,2,1400,9500000
+Bangalore,Karnataka,sale,apartment,3,3,1800,13000000
+Bangalore,Karnataka,sale,villa,3,3,2200,18000000
+Bangalore,Karnataka,sale,villa,4,4,3000,25000000
+Bangalore,Karnataka,rent,apartment,1,1,600,15000
+Bangalore,Karnataka,rent,apartment,2,1,900,22000
+Bangalore,Karnataka,rent,apartment,2,2,1100,28000
+Bangalore,Karnataka,rent,apartment,3,2,1400,38000
+Mumbai,Maharashtra,sale,apartment,1,1,550,8000000
+Mumbai,Maharashtra,sale,apartment,2,1,850,14000000
+Mumbai,Maharashtra,sale,apartment,2,2,1050,18000000
+Mumbai,Maharashtra,sale,apartment,3,2,1350,25000000
+Mumbai,Maharashtra,sale,apartment,3,3,1700,35000000
+Mumbai,Maharashtra,sale,villa,4,4,2800,60000000
+Mumbai,Maharashtra,rent,apartment,1,1,550,30000
+Mumbai,Maharashtra,rent,apartment,2,1,850,50000
+Mumbai,Maharashtra,rent,apartment,2,2,1050,65000
+Mumbai,Maharashtra,rent,apartment,3,2,1350,90000
+Chennai,Tamil Nadu,sale,apartment,1,1,650,3000000
+Chennai,Tamil Nadu,sale,apartment,2,1,950,5000000
+Chennai,Tamil Nadu,sale,apartment,2,2,1150,6500000
+Chennai,Tamil Nadu,sale,apartment,3,2,1450,8500000
+Chennai,Tamil Nadu,sale,villa,3,3,2100,15000000
+Chennai,Tamil Nadu,rent,apartment,1,1,650,12000
+Chennai,Tamil Nadu,rent,apartment,2,1,950,18000
+Chennai,Tamil Nadu,rent,apartment,2,2,1150,24000
+Chennai,Tamil Nadu,rent,apartment,3,2,1450,32000
+Hyderabad,Telangana,sale,apartment,1,1,620,3200000
+Hyderabad,Telangana,sale,apartment,2,1,920,5200000
+Hyderabad,Telangana,sale,apartment,2,2,1120,6800000
+Hyderabad,Telangana,sale,apartment,3,2,1420,9000000
+Hyderabad,Telangana,sale,villa,3,3,2100,16000000
+Hyderabad,Telangana,rent,apartment,1,1,620,13000
+Hyderabad,Telangana,rent,apartment,2,1,920,20000
+Hyderabad,Telangana,rent,apartment,2,2,1120,26000
+Hyderabad,Telangana,rent,apartment,3,2,1420,35000
+Pune,Maharashtra,sale,apartment,1,1,580,2800000
+Pune,Maharashtra,sale,apartment,2,1,880,4800000
+Pune,Maharashtra,sale,apartment,2,2,1080,6200000
+Pune,Maharashtra,sale,apartment,3,2,1380,8200000
+Pune,Maharashtra,sale,villa,3,3,2000,14000000
+Pune,Maharashtra,rent,apartment,1,1,580,11000
+Pune,Maharashtra,rent,apartment,2,1,880,17000
+Pune,Maharashtra,rent,apartment,2,2,1080,22000
+Pune,Maharashtra,rent,apartment,3,2,1380,30000
+Delhi,Delhi,sale,apartment,1,1,560,5000000
+Delhi,Delhi,sale,apartment,2,1,860,9000000
+Delhi,Delhi,sale,apartment,2,2,1060,12000000
+Delhi,Delhi,sale,apartment,3,2,1360,17000000
+Delhi,Delhi,sale,villa,4,4,2900,45000000
+Delhi,Delhi,rent,apartment,1,1,560,20000
+Delhi,Delhi,rent,apartment,2,1,860,35000
+Delhi,Delhi,rent,apartment,2,2,1060,45000
+Delhi,Delhi,rent,apartment,3,2,1360,65000
