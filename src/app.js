@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 import logger from './config/logger.js';
 import { securityMiddleware } from './middleware/security.middleware.js';
 import authRoutes from './routes/auth.routes.js';
+import listingRoutes from './routes/listing.routes.js';
 
 const app = express();
 
@@ -60,6 +61,7 @@ app.get('/api', (req, res) => {
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/listings', listingRoutes);
 
 // 404 handler
 app.use((req, res) => {
