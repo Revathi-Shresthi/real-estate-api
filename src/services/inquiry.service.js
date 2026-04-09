@@ -1,4 +1,4 @@
-import { eq, and } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 import { db } from '../config/database.js';
 import { inquiries } from '../models/inquiry.model.js';
 import { listings } from '../models/listing.model.js';

@@ -19,6 +19,6 @@ export const getPriceEstimate = async (data) => {
     return response.data;
   } catch (error) {
     logger.error('Error getting price estimate:', error);
-    throw new Error('Price estimation service unavailable');
+    throw new Error('Price estimation service unavailable', { cause: error });
   }
 };

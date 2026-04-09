@@ -25,7 +25,7 @@ export const uploadImages = async (files) => {
     return await Promise.all(uploadPromises);
   } catch (error) {
     logger.error('Error uploading images:', error);
-    throw new Error('Error uploading images');
+    throw new Error('Error uploading images', { cause: error });
   }
 };
 
