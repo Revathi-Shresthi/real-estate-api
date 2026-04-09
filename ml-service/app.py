@@ -3,98 +3,93 @@ from flask_cors import CORS
 import joblib
 import numpy as np
 import os
+import logging
 
+# ── Logging ────────────────────────────────────────────────────────────────────
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+)
+logger = logging.getLogger(__name__)
+
+# ── App setup ──────────────────────────────────────────────────────────────────
 app = Flask(__name__)
-CORS(app)
+CORS(app)   # allow cross-origin requests from the Node.js API
 
-model = None
-le_city = None
-le_state = None
-le_type = None
-le_category = None
+# ── Load model & encoders ──────────────────────────────────────────────────────
+MODEL_DIR = os.path.join(os.path.dirname(__file__), "model")
 
-def load_models():
-    global model, le_city, le_state, le_type, le_category
-    try:
-        model = joblib.load('model/model.pkl')
-        le_city = joblib.load('model/le_city.pkl')
-        le_state = joblib.load('model/le_state.pkl')
-        le_type = joblib.load('model/le_type.pkl')
-        le_category = joblib.load('model/le_category.pkl')
-        print("Models loaded successfully")
-    except Exception as e:
-        print(f"Error loading models: {e}")
+try:
+    model       = joblib.load(os.path.join(MODEL_DIR, "model.pkl"))
+    le_city     = joblib.load(os.path.join(MODEL_DIR, "le_city.pkl"))
+    le_state    = joblib.load(os.path.join(MODEL_DIR, "le_state.pkl"))
+    le_type     = joblib.load(os.path.join(MODEL_DIR, "le_type.pkl"))
+    le_category = joblib.load(os.path.join(MODEL_DIR, "le_category.pkl"))
+    logger.info("Models loaded successfully")
+except Exception as e:
+    logger.error(f"Failed to load models: {e}")
+    raise
 
-@app.route('/health', methods=['GET'])
+
+# ── Routes ─────────────────────────────────────────────────────────────────────
+
+@app.route("/health", methods=["GET"])
 def health():
-    return jsonify({
-        "status": "ok",
-        "service": "ml-price-estimator"
-    })
+    """Health-check endpoint — required by Docker Compose depends_on."""
+    return jsonify({"status": "ok", "service": "ml-service"}), 200
 
-@app.route('/predict', methods=['POST'])
+
+@app.route("/predict", methods=["POST"])
 def predict():
+    """
+    Accepts JSON body:
+      { city, state, type, category, bedrooms, bathrooms, area }
+    Returns:
+      { estimated_price, price_range: { low, high }, currency }
+    """
+    data = request.get_json(force=True)
+
+    # ── Validate required fields ───────────────────────────────────────────────
+    required = ["city", "state", "type", "category", "bedrooms", "bathrooms", "area"]
+    missing = [f for f in required if f not in data]
+    if missing:
+        return jsonify({"error": f"Missing fields: {missing}"}), 400
+
     try:
-        data = request.get_json()
-
-        required = ['city', 'state', 'type', 'category',
-                   'bedrooms', 'bathrooms', 'area']
-
-        for field in required:
-            if field not in data:
-                return jsonify({
-                    "error": f"Missing field: {field}"
-                }), 400
-
-        try:
-            city_encoded = le_city.transform([data['city']])[0]
-        except ValueError:
-            city_encoded = 0
-
-        try:
-            state_encoded = le_state.transform([data['state']])[0]
-        except ValueError:
-            state_encoded = 0
-
-        try:
-            type_encoded = le_type.transform([data['type']])[0]
-        except ValueError:
-            type_encoded = 0
-
-        try:
-            category_encoded = le_category.transform([data['category']])[0]
-        except ValueError:
-            category_encoded = 0
-
         features = np.array([[
-            city_encoded,
-            state_encoded,
-            type_encoded,
-            category_encoded,
-            int(data['bedrooms']),
-            int(data['bathrooms']),
-            float(data['area'])
+            le_city.transform([data["city"]])[0],
+            le_state.transform([data["state"]])[0],
+            le_type.transform([data["type"]])[0],
+            le_category.transform([data["category"]])[0],
+            int(data["bedrooms"]),
+            int(data["bathrooms"]),
+            float(data["area"]),
         ]])
 
-        predicted_price = model.predict(features)[0]
-        predicted_price = max(0, predicted_price)
-
-        low = predicted_price * 0.9
-        high = predicted_price * 1.1
+        price = model.predict(features)[0]
 
         return jsonify({
-            "estimated_price": round(predicted_price),
+            "estimated_price": round(price),
             "price_range": {
-                "low": round(low),
-                "high": round(high)
+                "low":  round(price * 0.9),
+                "high": round(price * 1.1),
             },
             "currency": "INR",
-            "message": "Price estimate based on market data"
-        })
+        }), 200
 
+    except ValueError as e:
+        # e.g. unseen label passed to LabelEncoder
+        return jsonify({"error": f"Invalid input value: {e}"}), 422
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        logger.error(f"Prediction error: {e}")
+        return jsonify({"error": "Internal server error"}), 500
 
-if __name__ == '__main__':
-    load_models()
-    app.run(host='0.0.0.0', port=5001, debug=True)
+
+# ── Entry point ────────────────────────────────────────────────────────────────
+#   host='0.0.0.0' is REQUIRED for Docker — without it Flask binds to
+#   127.0.0.1 (inside the container only) and port 5001 is unreachable.
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5001))
+    logger.info(f"Starting ML service on http://0.0.0.0:{port}")
+    app.run(host="0.0.0.0", port=port, debug=False)
