@@ -27,10 +27,7 @@ export const add = async (req, res, next) => {
 
 export const remove = async (req, res, next) => {
   try {
-    const result = await removeFromWishlist(
-      req.user.id,
-      req.params.listingId
-    );
+    const result = await removeFromWishlist(req.user.id, req.params.listingId);
 
     return res.status(200).json(result);
   } catch (error) {

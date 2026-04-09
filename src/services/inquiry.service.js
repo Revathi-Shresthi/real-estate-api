@@ -109,9 +109,7 @@ export const deleteInquiry = async (inquiryId, userId, role) => {
       throw new Error('Not authorized to delete this inquiry');
     }
 
-    await db
-      .delete(inquiries)
-      .where(eq(inquiries.id, inquiryId));
+    await db.delete(inquiries).where(eq(inquiries.id, inquiryId));
 
     return { message: 'Inquiry deleted successfully' };
   } catch (error) {

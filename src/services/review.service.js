@@ -19,12 +19,7 @@ export const createReview = async (userId, listingId, data) => {
     const [existing] = await db
       .select()
       .from(reviews)
-      .where(
-        and(
-          eq(reviews.userId, userId),
-          eq(reviews.listingId, listingId)
-        )
-      )
+      .where(and(eq(reviews.userId, userId), eq(reviews.listingId, listingId)))
       .limit(1);
 
     if (existing) {
@@ -90,9 +85,7 @@ export const deleteReview = async (reviewId, userId, role) => {
       throw new Error('Not authorized to delete this review');
     }
 
-    await db
-      .delete(reviews)
-      .where(eq(reviews.id, reviewId));
+    await db.delete(reviews).where(eq(reviews.id, reviewId));
 
     return { message: 'Review deleted successfully' };
   } catch (error) {

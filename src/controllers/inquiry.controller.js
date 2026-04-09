@@ -4,7 +4,10 @@ import {
   replyToInquiry,
   deleteInquiry,
 } from '../services/inquiry.service.js';
-import { createInquirySchema, replyInquirySchema } from '../validations/inquiry.validation.js';
+import {
+  createInquirySchema,
+  replyInquirySchema,
+} from '../validations/inquiry.validation.js';
 import { formatValidationError } from '../utils/format.js';
 import logger from '../config/logger.js';
 
@@ -24,10 +27,7 @@ export const create = async (req, res, next) => {
       });
     }
 
-    const inquiry = await createInquiry(
-      req.user.id,
-      validationResult.data
-    );
+    const inquiry = await createInquiry(req.user.id, validationResult.data);
 
     return res.status(201).json({
       message: 'Inquiry sent successfully',

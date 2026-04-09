@@ -165,12 +165,7 @@ export const updateStatus = async (req, res, next) => {
   try {
     const { status } = req.body;
 
-    const validStatuses = [
-      'available',
-      'sold',
-      'rented',
-      'under_negotiation',
-    ];
+    const validStatuses = ['available', 'sold', 'rented', 'under_negotiation'];
 
     if (!validStatuses.includes(status)) {
       return res.status(400).json({
@@ -198,10 +193,7 @@ export const updateStatus = async (req, res, next) => {
 
 export const getMyListings = async (req, res, next) => {
   try {
-    const agentListings = await getAgentListings(
-      req.user.id,
-      req.query
-    );
+    const agentListings = await getAgentListings(req.user.id, req.query);
     return res.status(200).json({
       message: 'Your listings retrieved successfully',
       listings: agentListings,

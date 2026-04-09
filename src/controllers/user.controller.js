@@ -58,11 +58,7 @@ export const update = async (req, res, next) => {
 
 export const remove = async (req, res, next) => {
   try {
-    const result = await deleteUser(
-      req.params.id,
-      req.user.id,
-      req.user.role
-    );
+    const result = await deleteUser(req.params.id, req.user.id, req.user.role);
     return res.status(200).json(result);
   } catch (error) {
     logger.error('Delete user error:', error);

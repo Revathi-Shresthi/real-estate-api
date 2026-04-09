@@ -20,10 +20,7 @@ export const addToWishlist = async (userId, listingId) => {
       .select()
       .from(wishlists)
       .where(
-        and(
-          eq(wishlists.userId, userId),
-          eq(wishlists.listingId, listingId)
-        )
+        and(eq(wishlists.userId, userId), eq(wishlists.listingId, listingId))
       )
       .limit(1);
 

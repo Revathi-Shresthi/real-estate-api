@@ -60,8 +60,7 @@ describe('Listings Endpoints', () => {
     });
 
     it('should filter by city', async () => {
-      const response = await request(app)
-        .get('/api/listings?city=Bangalore');
+      const response = await request(app).get('/api/listings?city=Bangalore');
 
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty('listings');
@@ -72,16 +71,14 @@ describe('Listings Endpoints', () => {
     it('should get listing by id', async () => {
       if (!listingId) return;
 
-      const response = await request(app)
-        .get(`/api/listings/${listingId}`);
+      const response = await request(app).get(`/api/listings/${listingId}`);
 
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty('listing');
     });
 
     it('should return 404 for non-existent listing', async () => {
-      const response = await request(app)
-        .get('/api/listings/99999');
+      const response = await request(app).get('/api/listings/99999');
 
       expect(response.status).toBe(404);
     });

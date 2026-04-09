@@ -86,9 +86,7 @@ export const deleteUser = async (id, requesterId, requesterRole) => {
       throw new Error('Not authorized to delete this user');
     }
 
-    await db
-      .delete(users)
-      .where(eq(users.id, parseInt(id)));
+    await db.delete(users).where(eq(users.id, parseInt(id)));
 
     logger.info(`User deleted: ${id}`);
     return { message: 'User deleted successfully' };

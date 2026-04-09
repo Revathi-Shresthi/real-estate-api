@@ -48,12 +48,7 @@ router.put(
   update
 );
 
-router.delete(
-  '/:id',
-  authenticateToken,
-  requireRole('agent', 'admin'),
-  remove
-);
+router.delete('/:id', authenticateToken, requireRole('agent', 'admin'), remove);
 
 router.patch(
   '/:id/status',

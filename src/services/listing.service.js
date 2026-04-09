@@ -108,8 +108,7 @@ export const getAllListings = async (query) => {
       );
     }
 
-    const whereClause =
-      conditions.length > 0 ? and(...conditions) : undefined;
+    const whereClause = conditions.length > 0 ? and(...conditions) : undefined;
 
     const allListings = await db
       .select()
@@ -203,9 +202,7 @@ export const deleteListing = async (id, agentId, role) => {
       throw new Error('Not authorized to delete this listing');
     }
 
-    await db
-      .delete(listings)
-      .where(eq(listings.id, parseInt(id)));
+    await db.delete(listings).where(eq(listings.id, parseInt(id)));
 
     logger.info(`Listing deleted: ${id}`);
     return { message: 'Listing deleted successfully' };

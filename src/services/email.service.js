@@ -1,7 +1,11 @@
 import transporter from '../config/email.js';
 import logger from '../config/logger.js';
 
-export const sendInquiryNotification = async (agentEmail, buyerName, listingTitle) => {
+export const sendInquiryNotification = async (
+  agentEmail,
+  buyerName,
+  listingTitle
+) => {
   try {
     await transporter.sendMail({
       from: process.env.EMAIL_USER,

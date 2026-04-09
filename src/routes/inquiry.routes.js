@@ -12,18 +12,9 @@ import {
 
 const router = express.Router();
 
-router.post(
-  '/',
-  authenticateToken,
-  requireRole('buyer', 'admin'),
-  create
-);
+router.post('/', authenticateToken, requireRole('buyer', 'admin'), create);
 
-router.get(
-  '/mine',
-  authenticateToken,
-  getMine
-);
+router.get('/mine', authenticateToken, getMine);
 
 router.post(
   '/:id/reply',
@@ -32,10 +23,6 @@ router.post(
   reply
 );
 
-router.delete(
-  '/:id',
-  authenticateToken,
-  remove
-);
+router.delete('/:id', authenticateToken, remove);
 
 export default router;

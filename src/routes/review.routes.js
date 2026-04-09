@@ -20,10 +20,6 @@ router.post(
 
 router.get('/:listingId', getForListing);
 
-router.delete(
-  '/:id',
-  authenticateToken,
-  remove
-);
+router.delete('/:id', authenticateToken, remove);
 
 export default router;

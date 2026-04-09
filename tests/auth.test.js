@@ -18,7 +18,10 @@ describe('Authentication Endpoints', () => {
         .send(testUser);
 
       expect(response.status).toBe(201);
-      expect(response.body).toHaveProperty('message', 'User registered successfully');
+      expect(response.body).toHaveProperty(
+        'message',
+        'User registered successfully'
+      );
       expect(response.body.user).toHaveProperty('email', testUser.email);
       expect(response.body).toHaveProperty('token');
     });
@@ -44,12 +47,10 @@ describe('Authentication Endpoints', () => {
 
   describe('POST /api/auth/signin', () => {
     it('should login successfully', async () => {
-      const response = await request(app)
-        .post('/api/auth/signin')
-        .send({
-          email: testUser.email,
-          password: testUser.password,
-        });
+      const response = await request(app).post('/api/auth/signin').send({
+        email: testUser.email,
+        password: testUser.password,
+      });
 
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty('token');
@@ -57,12 +58,10 @@ describe('Authentication Endpoints', () => {
     });
 
     it('should fail with wrong password', async () => {
-      const response = await request(app)
-        .post('/api/auth/signin')
-        .send({
-          email: testUser.email,
-          password: 'wrongpassword',
-        });
+      const response = await request(app).post('/api/auth/signin').send({
+        email: testUser.email,
+        password: 'wrongpassword',
+      });
 
       expect(response.status).toBe(401);
     });
@@ -86,11 +85,13 @@ describe('Authentication Endpoints', () => {
 
   describe('POST /api/auth/signout', () => {
     it('should signout successfully', async () => {
-      const response = await request(app)
-        .post('/api/auth/signout');
+      const response = await request(app).post('/api/auth/signout');
 
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty('message', 'Signed out successfully');
+      expect(response.body).toHaveProperty(
+        'message',
+        'Signed out successfully'
+      );
     });
   });
 });
